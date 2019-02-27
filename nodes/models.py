@@ -33,26 +33,26 @@ class Node(AuditableModel):
 
     # general attributes
     id = models.TextField(primary_key=True)
-    name = models.TextField(null=True, default=None, unique=True)
+    name = models.TextField(null=True, default=None, blank=True, unique=True)
     state = models.TextField(null=False, choices=NodeStates.choices)
-    description = models.TextField(null=True, default=None)
+    description = models.TextField(null=True, default=None, blank=True)
 
     # location attributes
-    longitude = models.DecimalField(null=True, default=None, decimal_places=10, max_digits=13)
-    latitude = models.DecimalField(null=True, default=None, decimal_places=10, max_digits=13)
-    address = models.TextField(null=True, default=None)
-    altitude = models.DecimalField(null=True, default=None, decimal_places=10, max_digits=13)
-    elevation = models.DecimalField(null=True, default=None, decimal_places=10, max_digits=13)
-    orientation_x = models.DecimalField(null=True, default=None, decimal_places=10, max_digits=13)
-    orientation_y = models.DecimalField(null=True, default=None, decimal_places=10, max_digits=13)
-    orientation_z = models.DecimalField(null=True, default=None, decimal_places=10, max_digits=13)
+    longitude = models.DecimalField(null=True, default=None, blank=True, decimal_places=10, max_digits=13)
+    latitude = models.DecimalField(null=True, default=None, blank=True, decimal_places=10, max_digits=13)
+    address = models.TextField(null=True, default=None, blank=True)
+    altitude = models.DecimalField(null=True, default=None, blank=True, decimal_places=10, max_digits=13)
+    elevation = models.DecimalField(null=True, default=None, blank=True, decimal_places=10, max_digits=13)
+    orientation_x = models.DecimalField(null=True, default=None, blank=True, decimal_places=10, max_digits=13)
+    orientation_y = models.DecimalField(null=True, default=None, blank=True, decimal_places=10, max_digits=13)
+    orientation_z = models.DecimalField(null=True, default=None, blank=True, decimal_places=10, max_digits=13)
 
     # connectivity attributes
-    modem_imei = models.TextField(null=True, default=None)
-    sim_iccid = models.TextField(null=True, default=None)
-    ssh_port = models.TextField(null=True, default=None)
-    ssh_key = models.TextField(null=True, default=None)
-    ssl_cert = models.TextField(null=True, default=None)
+    modem_imei = models.TextField(null=True, default=None, blank=True)
+    sim_iccid = models.TextField(null=True, default=None, blank=True)
+    ssh_port = models.TextField(null=True, default=None, blank=True)
+    ssh_key = models.TextField(null=True, default=None, blank=True)
+    ssl_cert = models.TextField(null=True, default=None, blank=True)
 
     # m2m relationship with tags
     tags = models.ManyToManyField('nodes.Tag')
@@ -106,6 +106,10 @@ class NodeHardware(AuditableModel):
         # manager config
         ordering = ('node', 'name')
 
+        # admin config
+        verbose_name = 'Node Hardware'
+        verbose_name_plural = 'Node Hardware'
+
 
 class SoftwareStates(DjangoChoices):
     running = ChoiceItem()
@@ -130,3 +134,7 @@ class NodeSoftware(AuditableModel):
 
         # manager config
         ordering = ('node',)
+
+        # admin config
+        verbose_name = 'Node Software'
+        verbose_name_plural = 'Node Software'
