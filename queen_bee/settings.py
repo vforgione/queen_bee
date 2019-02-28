@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'hardware',
     'software',
     'nodes',
+
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +129,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Rest framework configuration
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 200,
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'ORDERING_PARAM': 'order_by',
+}
