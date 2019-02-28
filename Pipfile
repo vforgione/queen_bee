@@ -17,6 +17,7 @@ django-choices = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 django-filter = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

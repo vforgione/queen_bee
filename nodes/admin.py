@@ -5,8 +5,8 @@ from .models import Node, NodeHardware, NodeSoftware
 
 
 class NodeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id', 'state', 'updated_on')
-    list_filter = ('tags', 'state', 'created_on', 'updated_on')
+    list_display = ('id', 'name', 'state', 'updated_on')
+    list_filter = ('state', 'created_on', 'updated_on')
     form = NodeForm
     fieldsets = (
         ('General Attributes', {

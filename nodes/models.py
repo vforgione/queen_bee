@@ -1,20 +1,9 @@
 from django.contrib.contenttypes.fields import GenericRelation
+from django.core.exceptions import ValidationError
 from django.db import models
 from djchoices import DjangoChoices, ChoiceItem
 
 from audit.mixins import AuditableModel
-
-
-class Tag(models.Model):
-    """A Tag is a tag... we're replacing the old _project_ concept
-    and instead using generic tagging to group nodes. It gives us a
-    little more cognitive flexibility.
-    """
-
-    name = models.TextField(unique=True)
-
-    class Meta:
-        db_table = 'tags'
 
 
 class NodeStates(DjangoChoices):
@@ -33,7 +22,7 @@ class Node(AuditableModel):
 
     # general attributes
     id = models.TextField(primary_key=True)
-    name = models.TextField(null=True, default=None, blank=True, unique=True)
+    name = models.TextField(null=True, default=None, blank=True)
     state = models.TextField(null=False, choices=NodeStates.choices)
     description = models.TextField(null=True, default=None, blank=True)
 
@@ -53,9 +42,6 @@ class Node(AuditableModel):
     ssh_port = models.TextField(null=True, default=None, blank=True)
     ssh_key = models.TextField(null=True, default=None, blank=True)
     ssl_cert = models.TextField(null=True, default=None, blank=True)
-
-    # m2m relationship with tags
-    tags = models.ManyToManyField('nodes.Tag')
 
     # reverse generic relation to changesets
     changesets = GenericRelation('audit.Changeset')

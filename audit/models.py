@@ -23,7 +23,7 @@ class Changeset(models.Model):
     # the models can dump their changes to a single table, rather
     # than having unique changesets for each model.
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
+    object_id = models.TextField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
     # We store the changed values as a dictionary: if we use

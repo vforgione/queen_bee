@@ -26,7 +26,6 @@ class NodeFilterset(FilterSet):
             'ssh_port': _filters,
             'ssh_key': _filters,
             'ssl_cert': _filters,
-            'tags__name': _filters,
         }
 
 
