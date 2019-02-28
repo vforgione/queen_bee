@@ -1,23 +1,22 @@
-from rest_framework import viewsets
-
 from .filters import NodeFilterset, NodeHardwareFilterset, NodeSoftwareFilterset
 from .models import Node, NodeHardware, NodeSoftware
 from .serializers import NodeSerializer, NodeHardwareSerializer, NodeSoftwareSerializer
+from audit.mixins import AuditableModelViewSet
 
 
-class NodeViewset(viewsets.ModelViewSet):
+class NodeViewset(AuditableModelViewSet):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
     filterset_class = NodeFilterset
 
 
-class NodeHardwareViewset(viewsets.ModelViewSet):
+class NodeHardwareViewset(AuditableModelViewSet):
     queryset = NodeHardware.objects.all()
     serializer_class = NodeHardwareSerializer
     filterset_class = NodeHardwareFilterset
 
 
-class NodeSoftwareViewset(viewsets.ModelViewSet):
+class NodeSoftwareViewset(AuditableModelViewSet):
     queryset = NodeSoftware.objects.all()
     serializer_class = NodeSoftwareSerializer
     filterset_class = NodeSoftwareFilterset

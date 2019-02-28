@@ -1,5 +1,10 @@
 from django.db import models, transaction
 from django.forms import model_to_dict
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+
+from .serializers import ChangesetSerializer
 
 
 class AuditableModel(models.Model):
@@ -47,7 +52,7 @@ class AuditableModel(models.Model):
             for key, instance_value in instance_dict.items():
                 db_value = db_dict[key]
                 if db_value != instance_value:
-                    changes[key] = db_value
+                    changes[key] = {'from': db_value, 'to': instance_value}
 
             # Now we are free to save the instance, but we also want to
             # save the changes in a single transaction.
@@ -56,3 +61,12 @@ class AuditableModel(models.Model):
             with transaction.atomic():
                 super().save(*args, **kwargs)
                 Changeset.objects.create(content_object=self, changes=changes)
+
+
+class AuditableModelViewSet(ModelViewSet):
+
+    @action(detail=True, methods=['get'])
+    def changesets(self, request, pk):
+        obj = self.get_object()
+        serialized = [ChangesetSerializer(instance=c).data for c in obj.changesets.all()]
+        return Response({'results': serialized})
