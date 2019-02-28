@@ -95,8 +95,10 @@ class NodeHardware(AuditableModel):
     name = models.TextField(null=False)
     node = models.ForeignKey('nodes.Node', on_delete=models.CASCADE)
     instance = models.OneToOneField('hardware.Instance', on_delete=models.PROTECT)
-    state = models.TextField(null=False, choices=HardwareStates.choices)
-    mode = models.TextField(null=False, choices=HardwareModes.choices)
+    expected_state = models.TextField(null=False, choices=HardwareStates.choices)
+    actual_state = models.TextField(null=False, choices=HardwareStates.choices)
+    expected_mode = models.TextField(null=False, choices=HardwareModes.choices)
+    actual_mode = models.TextField(null=False, choices=HardwareModes.choices)
 
     class Meta:
         # database config
@@ -125,7 +127,8 @@ class NodeSoftware(AuditableModel):
 
     node = models.ForeignKey('nodes.Node', on_delete=models.CASCADE)
     software = models.ForeignKey('software.Software', on_delete=models.PROTECT)
-    state = models.TextField(null=False, choices=SoftwareStates.choices)
+    expected_state = models.TextField(null=False, choices=SoftwareStates.choices)
+    actual_state = models.TextField(null=False, choices=SoftwareStates.choices)
 
     class Meta:
         # database config

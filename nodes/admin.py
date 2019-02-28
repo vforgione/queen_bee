@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .forms import NodeForm, NodeHardwareForm
+from .forms import NodeForm, NodeHardwareForm, NodeSoftwareForm
 from .models import Node, NodeHardware, NodeSoftware
 
 
@@ -23,14 +23,15 @@ class NodeAdmin(admin.ModelAdmin):
 
 
 class NodeHardwareAdmin(admin.ModelAdmin):
-    list_display = ('name', 'node', 'state', 'mode', 'updated_on')
-    list_filter = ('state', 'mode', 'created_on', 'updated_on')
+    list_display = ('node', 'name', 'expected_state', 'actual_state', 'expected_mode', 'actual_mode', 'updated_on')
+    list_filter = ('actual_state', 'actual_mode', 'created_on', 'updated_on')
     form = NodeHardwareForm
 
 
 class NodeSoftwareAdmin(admin.ModelAdmin):
-    list_display = ('node', 'software', 'state', 'updated_on')
-    lsit_filter = ('state', 'created_on', 'updated_on')
+    list_display = ('node', 'software', 'expected_state', 'actual_state', 'updated_on')
+    list_filter = ('actual_state', 'created_on', 'updated_on')
+    form = NodeSoftwareForm
 
 
 admin.site.register(Node, NodeAdmin)

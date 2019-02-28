@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Node, NodeHardware
+from .models import Node, NodeHardware, NodeSoftware
 
 
 class NodeForm(forms.ModelForm):
@@ -19,8 +19,14 @@ class NodeForm(forms.ModelForm):
 
 class NodeHardwareForm(forms.ModelForm):
     class Meta:
-        model = Node
-        fields = '__all__'
+        model = NodeHardware
+        exclude = ('actual_state', 'actual_mode')
         widgets = dict(
             name=forms.TextInput(),
         )
+
+
+class NodeSoftwareForm(forms.ModelForm):
+    class Meta:
+        model = NodeSoftware
+        exclude = ('actual_state',)
