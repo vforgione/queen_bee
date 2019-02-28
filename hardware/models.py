@@ -55,9 +55,6 @@ class Component(AuditableModel):
         # manager config
         ordering = ('name', '-version')
 
-    def __str__(self):
-        return f'{self.name} {self.version}'
-
 
 class Instance(AuditableModel):
     """An Instance is the actual, physical, real world piece of hardware. It
@@ -80,6 +77,3 @@ class Instance(AuditableModel):
 
         # manager config
         ordering = ('component', 'uid')
-
-    def __str__(self):
-        return f'{self.component} :: {self.uid}'
